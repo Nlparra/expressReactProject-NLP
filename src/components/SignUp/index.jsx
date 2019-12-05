@@ -13,14 +13,24 @@ export default class SignUp extends Component {
 
     handleSubmit = event => {
         event.preventDefault()
-        fetch('/users',{
+        fetch('/firebase/users',{
             method: 'POST',
             headers:{
                 'Content-Type':'application/json'
             },
             body: JSON.stringify(this.state)
         })
-
+       .then (res=>res.json())
+       .then(response => {
+           if(response.message){
+               alert(response.message)
+           }
+           else{
+               console.log('Going Somewhere else!!!!!!!!!');
+               
+           }
+       })
+       .catch(err=>console.log(err))
     }
 
 
@@ -39,6 +49,7 @@ export default class SignUp extends Component {
                     type="email" 
                     className="form-control" aria-describedby="emailHelp" 
                     name="email"
+                    required
                     onChange={this.handleChange}/>
                     <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
                 </div>
@@ -48,6 +59,7 @@ export default class SignUp extends Component {
                     type="password" 
                     className="form-control" 
                     name="password"
+                    required
                     onChange={this.handleChange}/>
                 </div>
                     <button type="submit" className="btn btn-primary">Submit</button>

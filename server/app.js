@@ -5,6 +5,8 @@ const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 
 const indexRouter = require("./routes/index");
+const firebaseRouter = require("./routes/firebase")
+require("./firebaseconfig")
 
 const app = express();
 
@@ -15,6 +17,7 @@ app.use(cookieParser());
 app.use(express.static(path.resolve(__dirname, "build")));
 
 app.use("/api", indexRouter);
+app.use("/firebase",firebaseRouter)
 app.get("*", (req, res) => {
   res.sendFile("build/index.html", { root: __dirname });
 });
